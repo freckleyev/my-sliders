@@ -51,31 +51,34 @@
             position: absolute;
             top: 0;
             left: 50%;
-            width: 40px;
+            width: 5px;
             height: 100%;
             background: white;
             cursor: grab;
             transform: translateX(-50%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
             user-select: none; /* Prevents dragging overlay */
-            border-radius: 4px;
+            border-radius: 3px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .slider::before,
+        .slider::after {
+            content: " ";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 8px 6px 8px 6px;
         }
         .slider::before {
-            content: "◀";
-            font-size: 20px;
-            color: black;
-            position: absolute;
-            left: 5px;
+            border-color: transparent transparent transparent black;
+            left: -12px;
         }
         .slider::after {
-            content: "▶";
-            font-size: 20px;
-            color: black;
-            position: absolute;
-            right: 5px;
+            border-color: transparent black transparent transparent;
+            right: -12px;
         }
     </style>
 </head>
