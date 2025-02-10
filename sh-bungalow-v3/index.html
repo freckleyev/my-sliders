@@ -31,10 +31,13 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 50%;
+            width: 50%; /* This ensures half is visible initially */
             overflow: hidden;
+            height: 100%;
         }
         .after img {
+            width: 100%;
+            height: auto;
             position: absolute;
             top: 0;
             left: 0;
@@ -54,9 +57,9 @@
 <body>
     <div class="container">
         <div class="image-wrapper">
-            <img src="https://freckleyev.github.io/my-sliders/sh-bungalow-v3/before.png" alt="Before">
+            <img src="before.jpg" alt="Before">
             <div class="after">
-                <img src="https://freckleyev.github.io/my-sliders/sh-bungalow-v3/after.jpg" alt="After">
+                <img src="after.jpg" alt="After">
             </div>
             <div class="slider"></div>
         </div>
