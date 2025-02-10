@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Before & After Slider</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: white;
+            margin: 0;
+        }
+        .container {
+            position: relative;
+            width: 600px;
+            max-width: 100%;
+            overflow: hidden;
+        }
+        .image-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        .image-wrapper img {
+            width: 100%;
+            display: block;
+        }
+        .after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            overflow: hidden;
+        }
+        .after img {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .slider {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 5px;
+            height: 100%;
+            background: red;
+            cursor: pointer;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-wrapper">
+            <img src="https://https://freckleyev.github.io/my-sliders/images/before.jpg" alt="Before">
+            <div class="after">
+                <img src="https://freckleyev.github.io/my-sliders/images/after.jpg" alt="After">
+            </div>
+            <div class="slider"></div>
+        </div>
+    </div>
+
+    <script>
+        const slider = document.querySelector(".slider");
+        const after = document.querySelector(".after");
+
+        function moveSlider(e) {
+            let rect = slider.parentElement.getBoundingClientRect();
+            let offsetX = e.clientX - rect.left;
+            let percent = Math.max(0, Math.min(offsetX / rect.width, 1));
+
+            slider.style.left = percent * 100 + "%";
+            after.style.width = percent * 100 + "%";
+        }
+
+        slider.addEventListener("mousedown", () => {
+            document.addEventListener("mousemove", moveSlider);
+            document.addEventListener("mouseup", () => {
+                document.removeEventListener("mousemove", moveSlider);
+            }, { once: true });
+        });
+    </script>
+</body>
+</html>
