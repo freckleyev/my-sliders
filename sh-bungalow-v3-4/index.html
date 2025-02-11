@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Before & After Slider</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: white;
+            margin: 0;
+            user-select: none; /* Prevents blue overlay */
+        }
+        .container {
+            position: relative;
+            width: 600px;
+            max-width: 100%;
+            overflow: hidden;
+        }
+        .image-wrapper {
+            position: relative;
+            width: 100%;
+            user-select: none; /* Prevents text/image selection */
+        }
+        .image-wrapper img {
+            width: 100%;
+            display: block;
+            pointer-events: none; /* Prevents selection */
+        }
+        .after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%; /* Keep full width */
+            height: 100%;
+            overflow: hidden;
+            clip-path: inset(0 50% 0 0); /* Initially hides half */
+        }
+        .after img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the image stays fixed */
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .slider {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 5px;
+            height: 100%;
+            background: white;
+            cursor: grab;
+            transform: translateX(-50%);
+            user-select: none; /* Prevents dragging overlay */
+            border-radius: 3px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .slider::before,
+        .slider::after {
+            content: " ";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 16px 12px; /* Arrow size */
+        }
+        .slider::before {
+            border-color: transparent white transparent transparent; /* Left arrow */
+            left: -29px; /* Increased spacing */
+        }
+        .slider::after {
+            border-color: transparent transparent transparent white; /* Right arrow */
+            right: -29px; /* Increased spacing */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-wrapper">
+            <img src="before.jpg" alt="Before">
+            <div class="after">
+                <img src="after.jpg" alt="After">
+            </div>
+            <div class="slider"></div>
+        </div>
+    </div>
+
+    <script>
+        const slider = document.querySelector(".slider");
+        const after = document.querySelector(".after");
+
+        function moveSlider(e) {
+            let rect = slider.parentElement.getBoundingClientRect();
+            let offsetX = e.clientX - rect.left;
+            let percent = Math.max(0, Math.min(offsetX / rect.width, 1));
+
+            slider.style.left = percent * 100 + "%";
+            after.style.clipPath = `inset(0 ${100 - percent * 100}% 0 0)`; // Adjusts visible area
+        }
+
+        slider.addEventListener("mousedown", () => {
+            document.addEventListener("mousemove", moveSlider);
+            document.addEventListener("mouseup", () => {
+                document.removeEventListener("mousemove", moveSlider);
+            }, { once: true });
+        });
+    </script>
+</body>
+</html>
